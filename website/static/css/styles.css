@@ -1,0 +1,385 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.container {
+  max-width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h1,
+.container h5 {
+  text-align: center;
+  color: #333;
+}
+
+.container p {
+  color: #007BFF;
+  font-size: 18px;
+}
+
+.actions-container button {
+    height: 36px; /* Match the height of the text in other cells */
+    line-height: 1.5;
+    width: auto;
+}
+
+.actions-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.centered-ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.centered-ul .ul-div {
+  margin: 10px;
+}
+
+p {
+    color: #007BFF;
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+td, thead {
+   text-align: center;   
+}
+
+
+h1, h5 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 97%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-section {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.login-heading {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.nav-item {
+    margin: 5px;
+}
+
+date-range {
+    margin: auto;
+}
+
+.ul-div {
+    margin: 10px;
+}
+
+ul, li, label {
+  text-align: center;
+}
+
+.chart-small {
+  width:  auto;
+  height: auto;
+}
+
+@media only screen and (max-width: 767px) {
+  .container {
+    padding: 10px;
+  }
+  .transaction {
+    flex-wrap: wrap;
+  }
+  .transaction > * {
+    flex-basis: 100%;
+    text-align: center;
+    margin: 5px 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .transaction-note,
+  .transaction-amount,
+  .transaction-category,
+  .transaction-date,
+  .transaction-trend {
+    font-size: 14px; /* Decrease font size for smaller screens */
+  }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        padding: 8px;
+        margin-bottom: 8px;
+    }
+}
+
+
+@media (max-width: 767px) {
+  .ul-div {
+    text-align: center;
+  }
+
+  .ul-div h5,
+  .ul-div p {
+    margin-bottom: 5px;
+  }
+
+  .container {
+    padding: 10px;
+    max-width: none;
+  }
+
+  .centered-ul {
+    flex-wrap: wrap;
+  }
+
+  .centered-ul .ul-div {
+    flex: 0 0 100%;
+  }
+
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+
+
+/* Add styling for the metric-selection dropdown */
+#metric-selection {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 16px;
+  -webkit-appearance: none; /* Remove default arrow in Safari */
+  -moz-appearance: none; /* Remove default arrow in Firefox */
+  appearance: none; /* Remove default arrow */
+}
+
+/* Style the dropdown arrow icon */
+#metric-selection::after {
+  content: '\25BC'; /* Unicode character for down arrow */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ensure the arrow doesn't interfere with clicking the dropdown */
+  color: #555; /* Adjust the color of the arrow */
+}
+
+/* Hover effect for dropdown */
+#metric-selection:hover {
+  border-color: #007BFF; /* Change border color on hover */
+}
+
+/* Focus effect for dropdown */
+#metric-selection:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #007BFF; /* Change border color on focus */
+}
+
+/* Selected option styling */
+#metric-selection option[selected] {
+  background-color: #007BFF; /* Change background color of selected option */
+  color: #fff; /* Change text color of selected option */
+}
+
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-success {
+  background-color: #d4edda;
+}
+
+.transaction-danger {
+  background-color: #f8d7da;
+}
+
+.transaction-note,
+.transaction-amount,
+.transaction-category,
+.transaction-date,
+.transaction-trend {
+  flex: 1;
+  text-align: center;
+}
+
+.transaction-note {
+  flex: 2;
+  text-align: left;
+}
+
+.transaction-trend {
+  flex: 0.5;
+}
+
+
+.transaction:hover {
+  transform: translateY(-2px); /* Add a subtle hover effect */
+  transition: transform 0.2s ease;
+}
+
+
+.crypto-details {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.crypto-wallet {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 300px;
+}
+
+.crypto-wallet h5 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.crypto-wallet p {
+    color: #007BFF;
+    font-size: 18px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.password-container {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password {
+  margin-bottom: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #444444;
+}
+
+.username {
+  font-weight: bold;
+}

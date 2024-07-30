@@ -1,0 +1,9 @@
+Flask
+flask-sqlalchemy
+python-dotenv
+python-json-logger
+pandas
+flask-login
+bcrypt
+requests
+gunicorn

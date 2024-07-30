@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+	<h1> Financial Summary </h1>
+	<form action="{{ url_for('finance.summary') }}" method="post" class="date-range" style="text-align: center;">
+	  <label for="date-range" >Date Range</label>
+	  <select name="date-range" id="date-range" style="width: 50px;">
+	    {% for date in date_range %}
+	    	<option value="{{ date }}">{{ date }}</option>
+	    {% endfor %}
+	  </select>
+	  <input type="submit" value="Summarize">
+	</form>  
+  </div>
+{% endblock %}

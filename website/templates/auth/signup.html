@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<br style="margin-bottom: 10px;">
+<div class="form-container">
+    <h1 class="login-heading">Signup</h1>
+    <form action="{{ url_for('api.signup_user') }}" method="post">
+      <label class="form-label" for="username">Username:</label>
+      <input class="form-control" type="text" name="username" />
+
+      <label class="form-label" for="password">Password:</label>
+      <input class="form-control" type="password" name="password" />
+
+      <label class="form-label" for="password">Email:</label>
+      <input class="form-control" type="email" name="email" />
+
+      <div style="text-align: center;">
+        <button class="btn btn-primary" type="submit">Signup</button>
+      </div>
+      
+    </form>
+  </div>
+{% endblock %}

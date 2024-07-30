@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row mb-4">
+    <div class="col-md-12 text-center">
+      <h3 class="display-4">Admin Dashboard</h3>
+      <p class="text-muted">Manage your application's data and settings</p>
+    </div>
+
+    <form action="{{ url_for('api.update_currency_conversions') }}" method="post">
+      <button class="btn btn-primary">Update currency conversions</button>
+    </form>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Files <span class="badge bg-primary">{{ data['server_file_total'] }}</span></h5>
+          <form action="/admin" method="get" class="d-inline w-50">
+            <input type="search" class="form-control form-control-sm" placeholder="Search files">
+          </form>
+        </div>
+        <div class="card-body p-0" style="height: 150px; overflow-y: auto;">
+          <div class="list-group list-group-flush">
+            {% for file in server_files %}
+            <div class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">{{ file[0] }}</h6>
+                  <small>{{ file[1] }}</small>
+                  <p class="mb-1">{{ file[2] }}</p>
+                </div>
+                
+                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-file-id="{{ file[0] }}">Delete File</button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <button class="btn btn-sm btn-primary">Load More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Logs</h5>
+          <form class="d-inline">
+            <input type="search" id="logSearch" class="form-control form-control-sm" placeholder="Search logs">
+          </form>
+        </div>
+        <div class="card-body p-0" style="height: 300px; overflow-y: auto;">
+          <div class="list-group list-group-flush">
+            {% for log in logs %}
+            <div class="list-group-item log-entry">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1" style="color: {% if log.levelname == 'ERROR' %}red{% else %}inherit{% endif %};">{{ log.levelname }}</h6>
+
+                  <small>{{ log.asctime }}</small>
+                  <p class="mb-1">{{ log.message }}</p>
+                  <button class="btn btn-sm btn-info btn-toggle-details">Details</button>
+                </div>
+              </div>
+              <div class="log-details mt-3" style="display: none;">
+                {% for key, value in log.meta_data.items() %}
+                  <p><strong>{{ key }}</strong> - {{ value }}</p>
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <button class="btn btn-sm btn-primary">Load More</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this file?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form id="deleteForm" action="" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+      const deleteModal = document.getElementById('deleteModal');
+      deleteModal.addEventListener('show.bs.modal', function (event) {
+          var button = event.relatedTarget;
+          var fileId = button.getAttribute('data-file-id');
+          var form = document.getElementById('deleteForm');
+          form.action = '{{ url_for("api.delete_file", file_name="") }}' + fileId;
+      });
+
+      const forms = document.querySelectorAll('form');
+
+      forms.forEach(form => {
+          form.addEventListener('keypress', function(event) {
+              if (event.key === 'Enter') {
+                  event.preventDefault(); // Prevent the default form submission
+                  form.submit(); // Manually submit the form
+              }
+          });
+      });
+
+      // Toggle log details
+      const logEntries = document.querySelectorAll('.log-entry');
+      logEntries.forEach(entry => {
+          const toggleButton = entry.querySelector('.btn-toggle-details');
+          const details = entry.querySelector('.log-details');
+          toggleButton.addEventListener('click', () => {
+              details.style.display = details.style.display === 'none' ? 'block' : 'none';
+          });
+      });
+
+      // Search logs
+      const logSearch = document.getElementById('logSearch');
+      logSearch.addEventListener('input', () => {
+          const searchTerm = logSearch.value.toLowerCase();
+          logEntries.forEach(entry => {
+              const logMessage = entry.querySelector('p.mb-1').textContent.toLowerCase();
+              const logDetails = entry.querySelector('.log-details pre').textContent.toLowerCase();
+              if (logMessage.includes(searchTerm) || logDetails.includes(searchTerm)) {
+                  entry.style.display = '';
+              } else {
+                  entry.style.display = 'none';
+              }
+          });
+      });
+  });
+</script>
+{% endblock %}

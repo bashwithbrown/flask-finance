@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+  <br style="margin-bottom: 10px;">
+  <div class="form-container">
+    <h1 class="login-heading">Login to your account</h1>
+    <form action="{{ url_for('api.login_user_profile') }}" method="post">
+      <label class="form-label" for="username">Username:</label>
+      <input class="form-control" type="text" name="username" />
+
+      <label class="form-label" for="password">Password:</label>
+      <div class="password-container">
+        <input class="form-control" type="password" name="password" id="password" />
+        <button type="button" class="toggle-password" onclick="togglePassword('password')">Show</button>
+      </div>
+
+      <div class="cf-turnstile" data-sitekey="{{ site_key }}"></div>
+
+      <div style="text-align: center; display: flex;">
+        <button class="btn btn-primary" type="submit">Login</button>
+        <a class="btn btn-danger btn-sm" href="{{ url_for('main.index') }}">Home</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

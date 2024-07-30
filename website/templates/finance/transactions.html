@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div id="transaction-list">
+    {% for transaction in transactions %}
+    <div class="transaction {% if transaction.category_type == 'INCOME' %}transaction-success{% else %}transaction-danger{% endif %}">
+      <div class="transaction-note">
+        <a href="transaction-detailed/{{ transaction.id }}">{{ transaction.notes }}</a>
+      </div>
+      <div class="transaction-amount">
+        ${{ transaction.amount | float }}
+      </div>
+      <div class="transaction-category">
+        {{ transaction.category }}
+      </div>
+      <div class="transaction-date">
+        {{ transaction.datetime }}
+      </div>
+    
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

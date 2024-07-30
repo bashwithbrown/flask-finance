@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <head>
+        <title>{{ data.id }} Success</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Transaction {{ data.id }} has been submitted</h1>
+            <p>${{ data.amount }} - {{ data.notes }}</p>
+
+            <form action="/" method="get">
+                <input type="submit" value="Return Home">
+            </form>
+            <br>
+            <form action="/enter-transaction" method="get">
+                <input type="submit" value="Enter another transaction">
+            </form>
+        </div>
+    </body>
+{% endblock %}

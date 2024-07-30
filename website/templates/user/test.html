@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Form</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .form-row {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Dynamic Form</h2>
+        <form id="dynamicForm">
+            <div class="form-row align-items-center">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Enter text">
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-success add-field" disabled>+</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Enable/disable the add button based on input value
+            $('#dynamicForm').on('input', 'input', function() {
+                const input = $(this);
+                const addButton = input.closest('.form-row').find('.add-field');
+                addButton.prop('disabled', input.val().trim() === '');
+            });
+
+            // Add a new input field when the plus button is clicked
+            $('#dynamicForm').on('click', '.add-field', function() {
+                const newField = $(`
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Enter text">
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-success add-field" disabled>+</button>
+                            <button type="button" class="btn btn-danger remove-field">-</button>
+                        </div>
+                    </div>
+                `);
+                $('#dynamicForm').append(newField);
+                $(this).closest('.form-row').find('.add-field').remove();
+                newField.find('input').focus();
+            });
+
+            // Remove an input field when the minus button is clicked
+            $('#dynamicForm').on('click', '.remove-field', function() {
+                $(this).closest('.form-row').remove();
+                updateAddButton();
+            });
+
+            // Update the add button in the last input field
+            function updateAddButton() {
+                const rows = $('#dynamicForm .form-row');
+                rows.each(function(index) {
+                    const addButton = $(this).find('.add-field');
+                    if (index === rows.length - 1) {
+                        if (!addButton.length) {
+                            $(this).find('.col-auto').append('<button type="button" class="btn btn-success add-field" disabled>+</button>');
+                        }
+                    } else {
+                        addButton.remove();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

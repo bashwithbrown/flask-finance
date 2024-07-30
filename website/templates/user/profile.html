@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <img src="{{ url_for('static', filename='file_upload/' + meta_data['profile_picture'] if meta_data['profile_picture'] else 'default_profile.png') }}" class="card-img-top rounded-circle" alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover;">
+          <h5 class="card-title mt-3">{{ current_user.username }}</h5>
+          <form action="{{ url_for('api.alter_user_profile_picture', user_id=current_user.id) }}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <input type="file" id="file" name="file" class="form-control-file mt-3" accept="image/png, image/jpeg">
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Save Profile Picture</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">User Details</h4>
+          <form action="{{ url_for('api.alter_user_information', user_id=current_user.id) }}" method="post">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <th scope="row">User ID:</th>
+                  <td>{{ current_user.id }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Username:</th>
+                  <td>
+                    <input type="text" name="username" class="form-control" value="{{ current_user.username }}" required>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Email:</th>
+                  <td>
+                    <input type="email" name="email" class="form-control" value="{{ meta_data['email'] }}" required>
+                  </td>
+          
+                </tr>
+                <tr>
+                  <th scope="row">Admin:</th>
+                  <td>
+                    <input type="checkbox" name="is_admin" class="form-check-input" {% if meta_data['is_admin'] == 'True' %}checked{% endif %}>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Employee:</th>
+                  <td>
+                    <input type="checkbox" name="is_employee" class="form-check-input" {% if meta_data['is_employee'] == 'True' %}checked{% endif %}>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Kraken API Key:</th>
+                  <td>
+                    <div class="password-container">
+                      <button type="button" class="toggle-password" onclick="togglePassword('kraken_api_key')">Show</button>
+                      <input type="password" name="kraken_api_key" id="kraken_api_key" class="form-control" value="{{ meta_data['kraken_api_key'] }}">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Kraken API Secret:</th>
+                  <td>
+                    <div class="password-container">
+                      <button type="button" class="toggle-password" onclick="togglePassword('kraken_api_secret')">Show</button>
+                      <input type="password" name="kraken_api_secret" id="kraken_api_secret" class="form-control" value="{{ meta_data['kraken_api_secret'] }}">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Etherscan API Key:</th>
+                  <td>
+                    <div class="password-container">
+                      <button type="button" class="toggle-password" onclick="togglePassword('etherscan_api_key')">Show</button>
+                      <input type="password" name="etherscan_api_key" id="etherscan_api_key" class="form-control" value="{{ meta_data['etherscan_api_key'] }}">
+                    </div>
+                  </td>     
+                </tr>
+                <tr>
+                  <th scope="row">Ethereum wallet addresses:</th>
+                  <td>
+                    <div class="password-container">
+                      <button type="button" class="toggle-password" onclick="togglePassword('ethereum_wallet_address')">Show</button>
+                      <input type="password" name="ethereum_wallet_address" id="ethereum_wallet_address" class="form-control" value="{{ meta_data['ethereum_wallet_address'] }}">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="actions-container mt-4">
+              <a href="{{ url_for('auth.reset_password') }}" class="btn btn-danger">Reset Password</a>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

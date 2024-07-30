@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Financial Metrics {{ meta_data['timeline'].upper() }}</h1>
+    <h5 class="mb-4">All dollar values in CAD</h5>
+    {% if meta_data['timeline'] == 'ytd' %}
+        <div class="centered-ul">
+            <div class="ul-div">
+                <h5>Income</h5>
+                <p class="ul-div" style="color: green">${{ metrics['ytd_income'] }}</p>
+            </div>
+            <div class="ul-div">
+                <h5>Expenses</h5>
+                <p class="ul-div" style="color: red;">${{ metrics['ytd_expenses'] }}</p>
+            </div>
+            <div class="ul-div">
+                <h5>Balance</h5>
+                <p class="ul-div">${{ metrics['ytd_return'] }}</p>
+            </div>
+            <div class="ul-div">
+                <h5>Savings Rate</h5>
+                <p class="ul-div">{{ metrics['ytd_savings_rate'] }}%</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="centered-ul">
+            <div class="ul-div">
+                <h5>Income</h5>
+                <p class="ul-div" style="color: green">${{ metrics['total_income'] }}</p>
+            </div>
+            <div class="ul-div">
+                <h5>Expenses</h5>
+                <p class="ul-div" style="color: red;">${{ metrics['total_expenses'] }}</p>
+            </div>
+            <div class="ul-div">
+                <h5>Balance</h5>
+                <p class="ul-div">${{ metrics['total_return'] }}</p>
+            </div>
+            <div class="ul-div">
+                <h5>Savings Rate</h5>
+                <p class="ul-div">{{ metrics['total_savings_rate'] }}%</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<div class="container mt-4 center">
+    <div class="mb-4">
+        <label for="metric-selection">Select Metrics:</label>
+        <select id="metric-selection" onchange="updateMetrics()">
+            <option value="ytd" {% if meta_data['timeline'] == 'ytd' %}selected{% endif %}>Year-to-Date</option>
+            <option value="all" {% if meta_data['timeline'] == 'all' %}selected{% endif %}>All-Time</option>
+        </select>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <canvas id="transactionsChart"></canvas>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <canvas id="doughnutChart" class="chart-small"></canvas>
+        </div>
+        <div class="col">
+            <canvas id="barChart" class="chart-small"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4" id="crypto-wallets-section">
+    <h2 class="mb-4">Crypto Wallets</h2>
+    <div class="crypto-details">
+        <div class="crypto-wallet" id="ethereum-wallet">
+            <h5>Ethereum Wallet Balance</h5>
+            <a href="https://etherscan.io/address/{{ crypto['eth_address'] }}" target="_blank">{{ crypto['eth_address'] }}</a>
+            <p>${{ "{:,.2f}".format(crypto['eth_balance']) }}</p>
+        </div>
+        <div class="crypto-wallet" id="kraken-wallet">
+            <h5>Kraken Account Balance</h5>
+            {% for token, value in crypto['kraken_balance'].items() %}
+                <p id="kraken-balance">{{ token }} {{ value }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    function updateMetrics() {
+        var selection = document.getElementById("metric-selection").value;
+        window.location.href = "/home?timeline=" + selection;
+    }
+</script>
+{% endblock %}

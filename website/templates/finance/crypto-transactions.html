@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h1>{{ crypto_address }} Transaction List</h1>
+  <div id="transaction-list">
+    {% for transaction in transactions['result'] %}
+    <div class="transaction {% if transaction.isError == '0' %}transaction-success{% else %}transaction-danger{% endif %}">
+      <div class="transaction-hash">
+        <strong>Hash:</strong> <a href="https://etherscan.io/tx/{{ transaction.hash }}" target="_blank">{{ transaction.hash }}</a>
+      </div>
+      <div class="transaction-details">
+        <div><strong>Block Number:</strong> {{ transaction.blockNumber }}</div>
+        <div><strong>From:</strong> <a href="https://etherscan.io/address/{{ transaction.from }}" target="_blank">{{ transaction.from }}</a></div>
+        <div><strong>To:</strong> <a href="https://etherscan.io/address/{{ transaction.to }}" target="_blank">{{ transaction.to }}</a></div>
+        <div><strong>Value:</strong> ${{ "{:,.2f}".format(transaction.value) }} USD</div>
+        <div><strong>Gas Used:</strong> {{ transaction.gasUsed }}</div>
+        <div><strong>Timestamp:</strong> {{ transaction.timeStamp }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
