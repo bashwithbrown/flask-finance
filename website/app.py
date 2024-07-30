@@ -1,10 +1,8 @@
 from flask import Flask, render_template
 from flask_login import LoginManager
 
-
 from core import config
 from database import DatabaseManager
-
 
 database_manager = DatabaseManager(config.DATABASE)
 
